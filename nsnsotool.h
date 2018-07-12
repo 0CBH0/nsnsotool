@@ -1,6 +1,6 @@
-// Copyright (C) 2018  0CBH0 <maodatou88@163.com>
-// Licensed under the terms of the GNU GPL, version 3
-// http://www.gnu.org/licenses/gpl-3.0.txt
+// Copyright (c) 2018, CBH <maodatou88@163.com>
+// Licensed under the terms of the BSD 3-Clause License
+// https://github.com/0CBH0/nsnsotool/blob/master/LICENSE
 
 #pragma once
 

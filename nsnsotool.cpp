@@ -1,3 +1,7 @@
+// Copyright (c) 2018, CBH <maodatou88@163.com>
+// Licensed under the terms of the BSD 3-Clause License
+// https://github.com/0CBH0/nsnsotool/blob/master/LICENSE
+
 #include <io.h>
 #include <string.h>
 #include <vector>
