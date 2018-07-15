@@ -4,8 +4,6 @@
 
 #include <io.h>
 #include <string.h>
-#include <vector>
-#include <algorithm> 
 #include <lz4.h>
 #include "nsnsotool.h"
 
@@ -110,7 +108,7 @@ int main(int argc, char *argv[])
 	if(argc < 2)
 	{
 		printf("nsnsotool\n");
-		printf("Compress or decompress NSO files for Nintendo Switch\n\n");
+		printf("Compress or decompress NSO/NRO files for Nintendo Switch\n\n");
 		printf("Usage:\n");
 		printf("nsnsotool <file_name> [out_name]\n");
 		return 0;

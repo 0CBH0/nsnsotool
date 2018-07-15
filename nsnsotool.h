@@ -4,22 +4,6 @@
 
 #pragma once
 
-#define SHF_RPL_ZLIB 		0x08000000
-
-#define SHT_PROGBITS        0x00000001
-#define SHT_SYMTAB          0x00000002
-#define SHT_STRTAB          0x00000003
-#define SHT_RELA            0x00000004
-#define SHT_NOBITS          0x00000008
-
-#define SHT_RPL_EXPORTS     0x80000001
-#define SHT_RPL_IMPORTS     0x80000002
-#define SHT_RPL_CRCS        0x80000003
-#define SHT_RPL_FILEINFO 	0x80000004
-
-#define CHUNK 16384
-#define LEVEL 6
-
 #define SHA256_ROTL(a,b) (((a>>(32-b))&(0x7fffffff>>(31-b)))|(a<<b))
 #define SHA256_SR(a,b) ((a>>b)&(0x7fffffff>>(b-1)))
 #define SHA256_Ch(x,y,z) ((x&y)^((~x)&z))
