@@ -2,7 +2,8 @@
 // Licensed under the terms of the BSD 3-Clause License
 // https://github.com/0CBH0/nsnsotool/blob/master/LICENSE
 
-#include <io.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 #include <lz4.h>
 #include "nsnsotool.h"
