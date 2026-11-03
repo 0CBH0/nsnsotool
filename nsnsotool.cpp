@@ -146,12 +146,16 @@ int main(int argc, char *argv[])
 	}
 	fclose(in);
 	fclose(out);
-	if(argc == 2 && result == 0)
+	if (argc == 2 && result == 0)
 		result = fcopy((char *)"temp.bin", argv[1]);
-	if(argc == 2)
+	if (argc == 2)
 		remove("temp.bin");
 	else if (result != 0)
 		remove(argv[2]);
+	if (result == 0)
+		printf("Done!\n");
+	else
+		printf("Fail!\n");
 	return result;
 }
 
