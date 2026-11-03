@@ -20,7 +20,8 @@ int decompress(FILE *in, FILE *out)
 	fwrite(&nsoHeader, sizeof(NSOHeader), 1, out);
 	tempa_u32 = 0;
 	for (u32 i = 0; i < 0x18; i++) fwrite(&tempa_u32, 4, 1, out);
-	while ((u32)ftell(out) < nsoHeader.fileOffset_text) putc(0, out);
+	fseek(in, ftell(out), 0);
+	while ((u32)ftell(out) < nsoHeader.fileOffset_text) putc(getc(in), out);
 	char *textData = new char[nsoHeader.cmpSize_text];
 	char *dcmpTextData = new char[nsoHeader.dcmpSize_text];
 	fseek(in, nsoHeader.fileOffset_text, 0);
@@ -66,7 +67,8 @@ int compress(FILE *in, FILE *out)
 	fwrite(&nsoHeader, sizeof(NSOHeader), 1, out);
 	tempa_u32 = 0;
 	for (u32 i = 0; i < 0x18; i++) fwrite(&tempa_u32, 4, 1, out);
-	while ((u32)ftell(out) < nsoHeader.fileOffset_text) putc(0, out);
+	fseek(in, ftell(out), 0);
+	while ((u32)ftell(out) < nsoHeader.fileOffset_text) putc(getc(in), out);
 	char *dcmpTextData = new char[nsoHeader.dcmpSize_text];
 	fseek(in, nsoHeader.fileOffset_text, 0);
 	fread(dcmpTextData, 1, nsoHeader.dcmpSize_text, in);
@@ -109,7 +111,7 @@ int main(int argc, char *argv[])
 	if(argc < 2)
 	{
 		printf("nsnsotool\n");
-		printf("Compress or decompress NSO/NRO files for Nintendo Switch\n\n");
+		printf("Compress or decompress NSO/NRO files for Nintendo Switch/Switch2\n\n");
 		printf("Usage:\n");
 		printf("nsnsotool <file_name> [out_name]\n");
 		return 0;
@@ -145,9 +147,12 @@ int main(int argc, char *argv[])
 	fclose(in);
 	fclose(out);
 	if(argc == 2 && result == 0)
-		fcopy((char *)"temp.bin", argv[1]);
-	remove("temp.bin");
-	return 0;
+		result = fcopy((char *)"temp.bin", argv[1]);
+	if(argc == 2)
+		remove("temp.bin");
+	else if (result != 0)
+		remove(argv[2]);
+	return result;
 }
 
 void sha256_nso(char *data, long length, u32 *sha256)
@@ -166,7 +171,7 @@ void sha256_nso(char *data, long length, u32 *sha256)
 		0x19a4c116, 0x1e376c08, 0x2748774c, 0x34b0bcb5, 0x391c0cb3, 0x4ed8aa4a, 0x5b9cca4f, 0x682e6ff3,
 		0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2,
 	};
-	l = length + ((length % 64 > 56) ? (128 - length % 64) : (64 - length % 64));
+	l = length + ((length % 64 >= 56) ? (128 - length % 64) : (64 - length % 64));
 	pp = (char*)malloc((unsigned long)l);
 	for (i = 0; i < length; pp[i + 3 - 2 * (i % 4)] = data[i], i++);
 	for (pp[i + 3 - 2 * (i % 4)] = (char)128, i++; i < l; pp[i + 3 - 2 * (i % 4)] = 0, i++);

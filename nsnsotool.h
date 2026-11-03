@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <stdio.h>
+
 #define SHA256_ROTL(a,b) (((a>>(32-b))&(0x7fffffff>>(31-b)))|(a<<b))
 #define SHA256_SR(a,b) ((a>>b)&(0x7fffffff>>(b-1)))
 #define SHA256_Ch(x,y,z) ((x&y)^((~x)&z))
